@@ -4,72 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MAHMOUD OTHMAN - Lapse Exploit</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Black+Ops+One&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-
 <style>
   :root { --premium-gold: #ffcc00; --dark-bg: rgba(12, 12, 14, 0.92); --border-color: rgba(255, 204, 0, 0.3); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    min-height: 100vh; background: #000 url('bg.jpg') no-repeat center center fixed; background-size: cover;
-    color: #fff; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; direction: rtl; overflow: hidden;
-  }
-  body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(255, 204, 0, 0.05) 0%, rgba(0,0,0,0.95) 100%); z-index: 0; }
-
-  .hud-container {
-    position: relative; z-index: 1; width: 95%; max-width: 850px; background: var(--dark-bg);
-    border: 2px solid var(--border-color); border-radius: 12px;
-    padding: 40px 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 204, 0, 0.05);
-  }
+  html, body { min-height: 100vh; background: #000; color: #fff; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; direction: rtl; overflow: hidden; }
+  body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(255, 204, 0, 0.08) 0%, rgba(0,0,0,0.95) 100%); z-index: 0; }
+  .hud-container { position: relative; z-index: 1; width: 95%; max-width: 850px; background: var(--dark-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 40px 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 204, 0, 0.05); }
   .hud-container::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 60%; height: 4px; background: var(--premium-gold); box-shadow: 0 0 20px var(--premium-gold); border-radius: 5px; }
-
   .brand-title { font-family: 'Black Ops One', 'Orbitron', cursive; font-size: 3.5rem; text-align: center; color: #fff; letter-spacing: 5px; margin-bottom: 5px; text-transform: uppercase; direction: ltr; text-shadow: 2px 2px 0px #000, 4px 4px 0px var(--premium-gold); }
   .brand-sub { font-size: 1.2rem; text-align: center; color: #ccc; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; direction: ltr; text-shadow: 0 0 10px rgba(255,204,0,0.3); }
-
   .status-panel { background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 8px; border: 1px solid rgba(255, 204, 0, 0.2); margin-bottom: 15px; position: relative; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9); }
-  .status-panel::before { content: 'EXECUTION'; position: absolute; top: -12px; right: 15px; background: var(--premium-gold); color: #000; padding: 2px 10px; font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; border-radius: 3px; }
-
   #state { font-size: 24px; font-weight: 900; color: #fff; text-shadow: 0 0 10px rgba(255, 204, 0, 0.6); text-align: center; margin-bottom: 10px; }
-  
   .loader-wrapper { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
   .dot { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff; animation: bounce 1s infinite alternate; }
   .dot:nth-child(2) { animation-delay: 0.2s; background: var(--premium-gold); box-shadow: 0 0 10px var(--premium-gold); } .dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bounce { to { transform: translateY(-10px); opacity: 0.5; } }
-
   #out { white-space: pre-wrap; font: 12px/1.45 Consolas, monospace; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 204, 0, 0.2); border-radius: 8px; padding: 15px; min-height: 150px; max-height: 250px; overflow-y: auto; color: #ccc; direction: ltr; text-align: left; }
   #out::-webkit-scrollbar { width: 5px; } #out::-webkit-scrollbar-thumb { background: var(--premium-gold); border-radius: 3px; }
-
   .powered-by { position: fixed; bottom: 12px; right: 20px; font-family: 'Orbitron', sans-serif; font-size: 13px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.3); z-index: 10; direction: ltr; }
   .powered-by span { color: var(--premium-gold); font-weight: 900; text-shadow: 0 0 5px var(--premium-gold); }
   .footer-sys { position: fixed; bottom: 12px; left: 20px; font-family: 'Orbitron', sans-serif; font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 2px; z-index: 10; direction: ltr; }
-
   @media (max-width: 600px) { .brand-title { font-size: 2.5rem; } .hud-container { padding: 30px 15px; } .powered-by { font-size: 10px; right: 10px; } .footer-sys { font-size: 9px; left: 10px; } }
 </style>
 </head>
 <body>
-
 <div class="hud-container">
   <h1 class="brand-title">M. OTHMAN</h1>
   <div class="brand-sub">LAPSE EXPLOIT</div>
-
-  <div class="status-panel">
-    <div id="state">
-      <span id="stateText">⏳ جارٍ تحميل سلسلة Lapse...</span>
-      <div class="loader-wrapper">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-      </div>
-    </div>
-  </div>
-  
+  <div class="status-panel"><div id="state"><span id="stateText">⏳ جارٍ تحميل سلسلة Lapse...</span><div class="loader-wrapper"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div></div>
   <div id="out"></div>
 </div>
-
 <div class="powered-by">POWERED BY <span>MAHMOUD FATHY</span></div>
 <div class="footer-sys">OTHMAN OS v1.0 - Lapse</div>
-
 <script type="module">
   import "./chain_lapse.js";
 </script>
